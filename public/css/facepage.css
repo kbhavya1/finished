@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
+img[src*="https://cdn.rawgit.com/000webhost/logo/e9bd13f7/footer-powered-by-000webhost-white2.png"]{display:none;}
+
+
+.header{
+height: 50px;
+text-align: center;
+background-color: rgba(47, 109, 190, 1);
+border-bottom:solid black 1px;
+}
+.header2{
+min-height: calc(100vh - 52px);
+width: 250px;
+margin-top: -7px !important;
+clear: both !important;
+float: left !important;
+text-align: center !important;margin-top: -30px;
+background-color: rgba(102, 102, 102, 1);
+border-bottom:solid black 1px;
+}
+.btn{
+float:right;
+text-decoration: underline;
+}
+.btn:hover
+{
+background-image:none !important;
+background-color:#3B3B98 !important;
+border: 2px !important;
+border-style: solid !important;
+border-color: #fff !important;
+cursor: pointer !important;
+}
+#headerr ul li{
+padding-bottom: 20px;
+}
+#headerr ul li:first-child {
+margin-top:0;
+}
+#headerr ul{
+float: center;
+padding-top: 25px;
+margin-left: -35px;
+margin-bottom: 35px;
+list-style: none;
+}
+#headerr ul li span{
+float:left;
+margin:0 0 10px 0px!important;
+display: block;
+text-transform: uppercase;
+font-family: 'Work Sans', sans-serif;
+text-decoration: none;
+color: white;
+padding: 0px 10px;
+text-align: center;
+height: 42px;
+width: 170px;
+line-height: 42px;
+}
+#headerr ul li a:hover{
+background: #8e44ad;
+}
+#headerr ul li a{
+float:left;
+text-align: center;
+height: 42px;
+line-height: 42px;
+}
+#headerr ul li img:hover{
+background: #8e44ad;
+}
+.active{
+background: #8e44ad!important;
+}

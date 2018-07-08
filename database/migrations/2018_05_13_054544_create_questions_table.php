@@ -6,6 +6,22 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateQuestionsTable extends Migration
 {
+
+    /*private function addMediumBlobColumnsInQuestions($columnsArr){
+            $sql="ALTER TABLE questions";
+            echo $sql;
+            for($i=count($columnsArr);$i>0;$i--){
+                $sql=$sql." ADD COLUMN ".$columnsArr[$i]." MEDIUMBLOB  ";
+                if($i > 1)
+                    $sql = $sql.",";
+            }
+
+
+
+
+        //return $sql;
+    }*/
+
     /**
      * Run the migrations.
      *
@@ -16,19 +32,19 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->char('subject',1);
-            $table->text('ques',4096);
+
             $table->boolean('istxt_ques')->default(true);
-            $table->text('op1',4096);
+
             $table->boolean('istxt_op1')->default(true);
-            $table->text('op2',4096);
+
             $table->boolean('istxt_op2')->default(true);
-            $table->text('op3',4096);
+
             $table->boolean('istxt_op3')->default(true);
-            $table->text('op4',4096);
+
             $table->boolean('istxt_op4')->default(true);
-            $table->text('op5',4096)->nullable();
+
             $table->boolean('istxt_op5')->default(true);
-            $table->text('op6',4096)->nullable();
+
             $table->boolean('istxt_op6')->default(true);
             $table->boolean('iscorrect_op1')->default(false);
             $table->boolean('iscorrect_op2')->default(false);
@@ -38,6 +54,18 @@ class CreateQuestionsTable extends Migration
             $table->boolean('iscorrect_op6')->default(false);
             $table->timestamps();
         });
+
+        \DB::statement("ALTER TABLE questions ADD ques MEDIUMBLOB");
+         \DB::statement("ALTER TABLE questions ADD op1 MEDIUMBLOB");
+          \DB::statement("ALTER TABLE questions ADD op2 MEDIUMBLOB");
+           \DB::statement("ALTER TABLE questions ADD op3 MEDIUMBLOB");
+            \DB::statement("ALTER TABLE questions ADD op4 MEDIUMBLOB");
+            DB::statement("ALTER TABLE questions ADD op5 MEDIUMBLOB");
+            DB::statement("ALTER TABLE questions ADD op6 MEDIUMBLOB");
+
+
+
+
     }
 
     /**

@@ -15,19 +15,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::middleware(['auth'])->group(function () {
 Route::resource('ques','QuestionsController');
-Route::get('/startexam','ExamController@index');
 Route::post('/submitPaper','QuestionsController@submitPaper');
-Route::get('/seederview','ExamController@seed')->name('seederview');
-Route::get('/loginview','ExamController@login')->name('loginview');
-Route::get('/adminview','ExamController@admin_login')->name('adminview');
-Route::get('/dashboardview','ExamController@dash_redirect')->name('dashboardview');
-Route::get('/seedpage','ExamController@seeder_page')->name('seedpage');
+Route::get('/startexam','ExamController@startExam');
+Route::get('/seeder_dashboard','SeederController@dashboard');
+Route::get('/seedQuestions','SeederController@seedQuestions');
 Route::post('/insert','ExamController@insertTodb')->name('insert');
-Route::get('/new', function () {
-    return view('exam.carousel');
+Route::get('/student_dashboard','StudentController@stu_dashbard')->name('stu_dash');
 });
 
-Route::get('/newc', function(){
-  return view('exam.optseed');
+
+//Route::get('/loginview','ExamController@login')->name('loginview');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+Route::get('/frontend', function () {
+  return view('exam.frontend');
 });

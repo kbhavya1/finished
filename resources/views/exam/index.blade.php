@@ -20,7 +20,12 @@
    </script>
 
   <script>
-            $.ajax({url: "{{url('ques')}}", success: function(result){
+            $.ajax({url: "{{url('ques')}}",
+                data:{
+                package:'{{ $package }}',
+                set:'{{ $set }}'
+                },
+                success: function(result){
                 var result=JSON.parse(result);
 
                 Object.defineProperty(window, "questions", {

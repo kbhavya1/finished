@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Globals\Constant;
 use App\Question;
-
-
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 
 class QuestionsController extends Controller
@@ -21,10 +21,18 @@ class QuestionsController extends Controller
      */
     public function index()
     {
+        $package=Input::get('package');
+        $set=Input::get('set');
 
         $question = new Question();
-        $ques=$question->get()->toJson();
 
+        $ques=\DB::table('quessets')
+                    ->select('questions.id','questions.subject','questions.ques','questions.istxt_ques','questions.op1','questions.istxt_op1','questions.op2','questions.istxt_op2','questions.op3','questions.istxt_op3','questions.op4','questions.istxt_op4','questions.op5','questions.istxt_op5','questions.op6','questions.istxt_op6' )
+                    ->join('questions', 'questions.id', '=', 'quessets.question_id')
+                    ->where("package",$package)
+                    ->where("set",$set)
+                    ->get()
+                    ->toJson();
         //dd($ques);
         return $ques;
     }
@@ -90,8 +98,41 @@ class QuestionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        $question=new Question();
+
+        $question->subject = $request->input('subject');
+        $question->ques = $request->input('ques');
+        $question->op1 = $request->input('op1');
+        $question->op2 = $request->input('op2');
+        $question->op3 = $request->input('op3');
+        $question->op4 = $request->input('op4');
+        $question->op5 = $request->input('op5');
+        $question->op6 = $request->input('op6');
+        $question->iscorrect_op1 = $request->input('iscorrect_op1');
+        $question->iscorrect_op2 = $request->input('iscorrect_op2');
+        $question->iscorrect_op3 = $request->input('iscorrect_op3');
+        $question->iscorrect_op4 = $request->input('iscorrect_op4');
+        $question->iscorrect_op5 = $request->input('iscorrect_op5');
+
+        if($question->save()){
+            return redirect()->back()->with('success', 'Question added !!!');
+
+        }else{
+            return Redirect::back()->withErrors(['msg', 'Unable to save Question']);
+
+        }
+
+
+        //echo "Success";
+
+        //$display = new Question();
+        //$displayed = $display->get()->toArray();
+
+       // dd($displayed);
     }
+
 
     /**
      * Display the specified resource.
@@ -112,7 +153,7 @@ class QuestionsController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**

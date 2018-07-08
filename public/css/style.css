@@ -176,9 +176,14 @@
             left: 1190px;
         }
 
-   .carousel, .item, .active { height: 100%; }
-   
-   .carousel-inner { height: 100%; }﻿
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+        body {
+          margin:0;
+          font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+        }
+        img[src*="https://cdn.rawgit.com/000webhost/logo/e9bd13f7/footer-powered-by-000webhost-white2.png"]{display:none;}
+
 
 .NAnsd{
     background: red;

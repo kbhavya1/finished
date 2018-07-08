@@ -10,9 +10,9 @@
   </head>
 
 <body>
-
+@include('seeder.layouts.flashmessage')
   <div class="container">
-      <form class="form-horizontal" action="insert" method="post">
+      <form class="form-horizontal" action="{{url("/ques")}}" method="post">
         <div class="form-group">
           {{ csrf_field() }}
           <label class="control-label col-sm-2" >Subject:</label>
@@ -75,6 +75,8 @@
 
         </div>
       </form>
+
+
   </div>
 
 </body>
