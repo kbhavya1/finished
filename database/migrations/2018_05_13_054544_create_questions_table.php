@@ -46,6 +46,7 @@ class CreateQuestionsTable extends Migration
             $table->boolean('istxt_op5')->default(true);
 
             $table->boolean('istxt_op6')->default(true);
+
             $table->boolean('iscorrect_op1')->default(false);
             $table->boolean('iscorrect_op2')->default(false);
             $table->boolean('iscorrect_op3')->default(false);

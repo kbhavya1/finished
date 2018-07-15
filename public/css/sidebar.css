@@ -1,0 +1,12 @@
+body{
+  margin: 0!important;
+  padding: 0!important;
+}
+
+.sidebar{
+  background-color:rgb(39,53,80);
+  height: 88vh;
+}
+.footbar{
+  background-color: green
+}

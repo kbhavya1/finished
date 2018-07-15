@@ -1,4 +1,10 @@
-{{ Form::model($quesset,array('route' => array('questionset.update', $quesset->id),'method'=>'put')) }}
+
+
+@if(isset($quesset))
+{{ Form::model($quesset,$actionCtrl) }}
+@else
+    {{ Form::open($actionCtrl) }}
+@endif
 
 <!-- name -->
 {{ Form::label('package', 'package') }}

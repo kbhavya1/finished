@@ -30,7 +30,7 @@ class CreateSubscriptionsTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the insemigrations.
      *
      * @return void
      */

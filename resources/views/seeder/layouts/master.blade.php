@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{!! Html::style('css/dashboard.css') !!}
-{!! Html::style('css/facepage.css') !!}
+
 
 <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -16,17 +15,14 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script
-            src="https://code.jquery.com/jquery-1.8.0.min.js"
-            integrity="sha256-jFdOCgY5bfpwZLi0YODkqNXQdIxKpm6y5O/fy0baSzE="
-            crossorigin="anonymous">
-    </script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -59,6 +55,7 @@
                                            document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
+                        <a href="{{ url('/profile') }}"><i class="fa fa-btn fa-sign-out">Profile</i></a>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
@@ -78,16 +75,17 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <main>
         @include('seeder.layouts.flashmessage')
-        <div class="col-md-3">
-
-            @if(isset($activeOption))
-                @include('seeder.layouts.sidebar')
-            @endif
+        <div>
+            @include('seeder.layouts.sidebar')
         </div>
-        <div class="col-md-9">
+        <div>
             @yield('content')
+        </div>
+
+        <div class="col-md-12">
+            @yield('footer')
         </div>
 
     </main>

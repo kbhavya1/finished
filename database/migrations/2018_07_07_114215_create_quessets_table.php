@@ -20,7 +20,7 @@ class CreateQuessetsTable extends Migration
             $table->integer('question_id');
             $table->timestamps();
             $table->timestamp('expired_at')->nullable();
-
+            $table->unique(['package','set','question_id']);
         });
     }
 

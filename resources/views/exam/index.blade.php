@@ -20,98 +20,126 @@
    </script>
 
   <script>
+      window.time=999;
+
             $.ajax({url: "{{url('ques')}}",
                 data:{
                 package:'{{ $package }}',
                 set:'{{ $set }}'
                 },
-                success: function(result){
-                var result=JSON.parse(result);
+                success: function(data) {
+                    var dataObject = JSON.parse(data);
+                    var result = dataObject.ques;
+                    window.time = dataObject.time;
 
-                Object.defineProperty(window, "questions", {
-                      value: {
-                        "physics":{
-                          "Answered": 0,
-                          "NAnswered": null,
-                          "NVisited": null,
-                          "markForReview": 0,
-                          "totalCount":0,
-                          "options":[],
-                          "data":{}
-                        },
-                        "chemistry":{
-                          "Answered": 0,
-                          "NAnswered": null,
-                          "NVisited": null,
-                          "markForReview": 0,
-                          "totalCount":0,
-                            "options":[],
-                          "data":{}
-                        },
-                        "maths":{                            //check
-                          "Answered": 0,
-                          "NAnswered": null,
-                          "NVisited": null,
-                          "markForReview": 0,
-                          "totalCount":0,
-                            "options":[],
-                          "data":{}
-                        },
-                    },
-                      writable: false
-              });
 
-                var createMap=function(subject,r){
-                      var maxOptionsAllowed=6;// NEED TO PASS FROM CONTROLLER;
-                        r.options={};
-                        for(var opIdx=1;opIdx<=maxOptionsAllowed;opIdx++){
-                            var currOp="op"+opIdx;
-                          if(r[currOp]==null){
-                            continue;
-                          }
-                          r.options[currOp]=r[currOp];
-                          delete r[currOp];
+                    Object.defineProperty(window, "questions", {
+                        value: {
+                            "physics": {
+                                "Answered": 0,
+                                "NAnswered": null,
+                                "NVisited": null,
+                                "markForReview": 0,
+                                "totalCount": 0,
+                                "options": [],
+                                "data": {}
+                            },
+                            "chemistry": {
+                                "Answered": 0,
+                                "NAnswered": null,
+                                "NVisited": null,
+                                "markForReview": 0,
+                                "totalCount": 0,
+                                "options": [],
+                                "data": {}
+                            },
+                            "maths": {                            //check
+                                "Answered": 0,
+                                "NAnswered": null,
+                                "NVisited": null,
+                                "markForReview": 0,
+                                "totalCount": 0,
+                                "options": [],
+                                "data": {}
+                            },
+                        },
+                        writable: false
+                    });
+
+                    var createMap = function (subject, r) {
+                        var maxOptionsAllowed = 6;// NEED TO PASS FROM CONTROLLER;
+                        r.options = {};
+                        for (var opIdx = 1; opIdx <= maxOptionsAllowed; opIdx++) {
+                            var currOp = "op" + opIdx;
+                            if (r[currOp] == null) {
+                                continue;
+                            }
+                            r.options[currOp] = r[currOp];
+                            delete r[currOp];
                         }
-                      r.status="NVistd";
-                      r.selectedAnswed=null;
-                      var nextIndex="rid"+(++questions[subject].totalCount);
-                       questions[subject].data[nextIndex]=r;
-                } ;
+                        r.status = "NVistd";
+                        r.selectedAnswed = null;
+                        var nextIndex = "rid" + (++questions[subject].totalCount);
+                        questions[subject].data[nextIndex] = r;
+                    };
 
-                result.forEach(function(r){
-                      switch (r.subject) {
-                        case "P":
-                            createMap("physics",r);
-                          break;
-                          case "C":
-                              createMap("chemistry",r);
-                            break;
+                    result.forEach(function (r) {
+                        switch (r.subject) {
+                            case "P":
+                                createMap("physics", r);
+                                break;
+                            case "C":
+                                createMap("chemistry", r);
+                                break;
                             case "M":
-                                createMap("maths",r);
-                              break;
-                      }
+                                createMap("maths", r);
+                                break;
+                        }
 
 
-                });
-              window.result=result;
+                    });
+                    window.result = result;
 
 
-              $(function(){
-                  $("#includedContent").load("{{asset('template/script.tpl')}}");
-                           $.getScript( "{{asset('js/main2.js')}}" )
-                  .done(function( script, textStatus ) {
-                      console.log( textStatus );
+                    $(function () {
+                        $("#includedContent").load("{{asset('template/script.tpl')}}");
+                        $.getScript("{{asset('js/main2.js')}}")
+                            .done(function (script, textStatus) {
+                                console.log(textStatus);
 
 
-                  })
-                  .fail(function( jqxhr, settings, exception ) {
-                  $( "div.log" ).text( "Triggered ajaxError handler." );
-              });
-              });
+                            })
+                            .fail(function (jqxhr, settings, exception) {
+                                $("div.log").text("Triggered ajaxError handler.");
+                            });
+                    });
 
 
+                    if (window.time == 0) {
+                        setTimeout(function () {
+                            Exam.submitPaper();
+                        }, 1250);
+                        alert("Finish");
+                    }
 
 
+                    var timer2 = "" + window.time;
+                    var interval = setInterval(function () {
+
+
+                        var timer = timer2.split(':');
+                        //by parsing integer, I avoid all extra string processing
+                        var minutes = parseInt(timer[0], 10);
+                        var seconds = parseInt(timer[1], 10);
+                        --seconds;
+                        minutes = (seconds < 0) ? --minutes : minutes;
+                        if (minutes < 0) clearInterval(interval);
+                        seconds = (seconds < 0) ? 59 : seconds;
+                        seconds = (seconds < 10) ? '0' + seconds : seconds;
+                        //minutes = (minutes < 10) ?  minutes : minutes;
+                        $('h4').html('Time Left:' + minutes + ':' + seconds);
+                        timer2 = minutes + ':' + seconds;
+                    }, 1000);
 
                 }});
 
@@ -204,7 +232,7 @@
                 <input type="button" value="Prev" class="tognext btn btn-default" onclick="Exam.getPrevQuestion()"/>
                 <input type="button" value="Next" class="togprev btn btn-default" onclick="Exam.getNextQuestion()"/>
                 <input type="button" value="Review" class="togprev btn btn-default" onclick="Exam.markQuestion()"/>
-                <input type="button" value="Submit" class="togsubmit btn btn-primary" id="valSubmit" onclick="Exam.submitPaper()">
+                    <a href="#"><input type="button" value="Submit" class="togsubmit btn btn-primary" id="valSubmit" onclick="Exam.submitPaper()"></a>
                 </nav>
                 <br>
                 <br>
@@ -217,23 +245,8 @@
     </div>
 
     <script>
-      var timer2 = "180:00";
-      var interval = setInterval(function() {
 
-
-  var timer = timer2.split(':');
-  //by parsing integer, I avoid all extra string processing
-  var minutes = parseInt(timer[0], 10);
-  var seconds = parseInt(timer[1], 10);
-  --seconds;
-  minutes = (seconds < 0) ? --minutes : minutes;
-  if (minutes < 0) clearInterval(interval);
-  seconds = (seconds < 0) ? 59 : seconds;
-  seconds = (seconds < 10) ? '0' + seconds : seconds;
-  //minutes = (minutes < 10) ?  minutes : minutes;
-  $('h4').html('Time Left:'+minutes + ':' + seconds);
-  timer2 = minutes + ':' + seconds;
-}, 1000);
+window.onbeforeunload = function() { return "Your work will be lost."; };
 
     </script>
     {!! Form::open(array("id"=>"submitPaper",'url' => 'submitPaper', 'method' => 'POST') ) !!}
